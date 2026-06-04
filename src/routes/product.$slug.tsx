@@ -6,13 +6,17 @@ import { getProduct, getRelated } from "@/lib/products";
 import { useCart, useWishlist } from "@/lib/store";
 import { ProductCard } from "@/components/shop/ProductCard";
 
+import type { Product } from "@/lib/products";
+
+type LoaderData = { product: Product };
+
 export const Route = createFileRoute("/product/$slug")({
-  loader: ({ params }) => {
+  loader: ({ params }): LoaderData => {
     const product = getProduct(params.slug);
     if (!product) throw notFound();
     return { product };
   },
-  head: ({ loaderData }) => ({
+  head: ({ loaderData }: { loaderData?: LoaderData }) => ({
     meta: loaderData
       ? [
           { title: `${loaderData.product.name} — Glowify` },
