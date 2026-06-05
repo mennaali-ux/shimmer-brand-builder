@@ -34,7 +34,7 @@ export const Route = createFileRoute("/product/$slug")({
 
 function ProductPage() {
   const { t } = useTranslation();
-  const { product } = Route.useLoaderData();
+  const { product } = Route.useLoaderData() as LoaderData;
   const [active, setActive] = useState(0);
   const [qty, setQty] = useState(1);
   const [tab, setTab] = useState<"description" | "ingredients" | "benefits" | "reviews">("description");
