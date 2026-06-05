@@ -1,8 +1,10 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useTranslation } from "react-i18next";
-import { Sparkles, Star, ArrowRight } from "lucide-react";
+import { Sparkles, Star, ArrowRight, Leaf, ShieldCheck, Truck, Award } from "lucide-react";
 import { ProductCard } from "@/components/shop/ProductCard";
 import { products, categories } from "@/lib/products";
+import heroBeauty from "@/assets/hero-beauty.jpg";
+import storeInterior from "@/assets/store-interior.jpg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -16,9 +18,20 @@ export const Route = createFileRoute("/")({
   component: Home,
 });
 
+const testimonials = [
+  { name: "Layla Ahmed", role: "Beauty Editor", text: "Glowify changed my morning routine. The Hydra-Satin Dew is unmatched — my skin looks like glass.", avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=200&q=80" },
+  { name: "Noor Khaled", role: "Skincare Devotee", text: "Finally a brand that delivers on luxury and clean ingredients. Worth every penny.", avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&w=200&q=80" },
+  { name: "Sofia Mansour", role: "Makeup Artist", text: "The packaging alone is worth it. The formulas are incredible — I use them on every client.", avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&q=80" },
+];
+
+const journalPosts = [
+  { title: "The Glass-Skin Ritual", img: "https://images.unsplash.com/photo-1556228720-195a672e8a03?auto=format&fit=crop&w=900&q=80", tag: "Skincare", body: "A three-step morning ceremony designed for a luminous, satin-finish glow that lasts." },
+  { title: "A Rose-Tinted Lip in 60s", img: "https://images.unsplash.com/photo-1586495777744-4413f21062fa?auto=format&fit=crop&w=900&q=80", tag: "Makeup", body: "How to achieve a soft, sun-kissed lip without ever reaching for a liner." },
+  { title: "Scalp Care for Healthy Hair", img: "https://images.unsplash.com/photo-1626282874430-c11ae32d2898?auto=format&fit=crop&w=900&q=80", tag: "Haircare", body: "Density and shine begin where the roots meet the scalp. Here's our ritual." },
+];
+
 function Home() {
   const { t } = useTranslation();
-  const featured = products.slice(0, 4);
   const bestSellers = products.filter((p) => p.tags.includes("bestseller")).slice(0, 4);
   const main = products[0];
   const tile1 = products[1];
@@ -28,14 +41,11 @@ function Home() {
   return (
     <div>
       {/* HERO */}
-      <section className="relative h-[88vh] min-h-[600px] flex items-center overflow-hidden">
+      <section className="relative h-[88vh] min-h-[640px] flex items-center overflow-hidden">
         <div className="absolute inset-0 z-0">
-          <img
-            src="https://images.unsplash.com/photo-1631214540242-6fa6ddcef687?auto=format&fit=crop&w=2000&q=80"
-            alt="Glowify hero"
-            className="w-full h-full object-cover"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-background/90 via-background/50 to-transparent" />
+          <img src={heroBeauty} alt="Luxury beauty products on marble" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-r from-background/95 via-background/60 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background/40 to-transparent" />
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-6 w-full">
           <div className="max-w-2xl animate-reveal">
@@ -48,18 +58,18 @@ function Home() {
             </h1>
             <p className="text-lg mb-10 text-pretty max-w-md opacity-80">{t("hero.body")}</p>
             <div className="flex flex-wrap gap-4">
-              <Link
-                to="/shop"
-                className="bg-foreground text-background px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-rose-deep transition-all transform hover:-translate-y-1 inline-flex items-center gap-2"
-              >
+              <Link to="/shop" className="bg-foreground text-background px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-rose-deep transition-all transform hover:-translate-y-1 inline-flex items-center gap-2">
                 {t("hero.ctaShop")} <ArrowRight className="size-4 rtl:rotate-180" />
               </Link>
-              <Link
-                to="/shop"
-                className="border border-foreground/20 px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-warm-white transition-all"
-              >
+              <Link to="/about" className="border border-foreground/20 px-10 py-5 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-warm-white transition-all">
                 {t("hero.ctaExplore")}
               </Link>
+            </div>
+
+            <div className="mt-12 flex flex-wrap gap-8 text-xs uppercase tracking-widest text-foreground/70">
+              <span className="inline-flex items-center gap-2"><Award className="size-4 text-rose" /> Award-winning</span>
+              <span className="inline-flex items-center gap-2"><Leaf className="size-4 text-rose" /> Cruelty-free</span>
+              <span className="inline-flex items-center gap-2"><ShieldCheck className="size-4 text-rose" /> Dermatologist-tested</span>
             </div>
           </div>
         </div>
@@ -89,14 +99,9 @@ function Home() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-4 grid-rows-2 gap-6 md:h-[900px]">
-          {/* Main */}
-          <Link
-            to="/product/$slug"
-            params={{ slug: main.slug }}
-            className="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-3xl bg-pink-light/20 min-h-[400px]"
-          >
+          <Link to="/product/$slug" params={{ slug: main.slug }} className="md:col-span-2 md:row-span-2 group relative overflow-hidden rounded-3xl bg-pink-light/20 min-h-[400px]">
             <img src={main.image} alt={main.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <div className="absolute inset-0 bg-gradient-to-t from-foreground/40 via-transparent to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 via-transparent to-transparent" />
             <div className="absolute bottom-8 inset-x-8 flex justify-between items-end text-warm-white">
               <div>
                 <p className="text-xs font-bold uppercase tracking-widest mb-1 opacity-80">{main.category}</p>
@@ -127,9 +132,7 @@ function Home() {
 
           <Link to="/product/$slug" params={{ slug: wide.slug }} className="md:col-span-2 group relative overflow-hidden rounded-3xl bg-pink-light/20 min-h-[300px]">
             <img src={wide.image} alt={wide.name} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-            <span className="absolute top-6 end-6 bg-background/90 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">
-              Award Winning
-            </span>
+            <span className="absolute top-6 end-6 bg-background/90 px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-tighter">Award Winning</span>
             <div className="absolute inset-0 bg-gradient-to-t from-foreground/50 to-transparent" />
             <div className="absolute bottom-6 inset-x-6 text-warm-white">
               <h3 className="font-display text-2xl">{wide.name}</h3>
@@ -144,17 +147,12 @@ function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <h2 className="font-display text-4xl text-center mb-16">{t("sections.categories")}</h2>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-12">
-            {categories.map((c, i) => {
+            {categories.map((c) => {
               const img = products.find((p) => p.category === c.key)?.image;
               return (
-                <Link
-                  key={c.key}
-                  to="/shop"
-                  search={{ category: c.key }}
-                  className="text-center group"
-                >
+                <Link key={c.key} to="/shop" search={{ category: c.key }} className="text-center group">
                   <div className="aspect-square rounded-full bg-warm-white border border-rose/20 mb-6 overflow-hidden transition-transform group-hover:-translate-y-2 shadow-[0_20px_60px_-30px_rgba(196,92,124,0.4)]">
-                    <img src={img} alt={c.label} className="w-full h-full object-cover opacity-90" />
+                    <img src={img} alt={c.label} loading="lazy" className="w-full h-full object-cover opacity-90" />
                   </div>
                   <h4 className="font-display text-lg uppercase tracking-widest">{t(`nav.${c.key}`)}</h4>
                   <p className="text-xs mt-1 text-muted-foreground">
@@ -163,6 +161,32 @@ function Home() {
                 </Link>
               );
             })}
+          </div>
+        </div>
+      </section>
+
+      {/* OFFER BANNER */}
+      <section className="max-w-7xl mx-auto px-6 py-24">
+        <div className="grid md:grid-cols-2 gap-6">
+          <div className="relative overflow-hidden rounded-3xl min-h-[400px] group">
+            <img src={storeInterior} alt="Glowify boutique" loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+            <div className="absolute inset-0 bg-gradient-to-tr from-foreground/70 to-transparent" />
+            <div className="relative z-10 p-10 md:p-14 h-full flex flex-col justify-end text-warm-white">
+              <p className="text-xs font-bold uppercase tracking-[0.3em] mb-3 opacity-90">Limited Edition</p>
+              <h3 className="font-display text-4xl md:text-5xl mb-4 max-w-sm">Visit our Riyadh flagship</h3>
+              <Link to="/about" className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest underline w-fit">
+                Find stores <ArrowRight className="size-3 rtl:rotate-180" />
+              </Link>
+            </div>
+          </div>
+          <div className="relative overflow-hidden rounded-3xl min-h-[400px] bg-gradient-to-br from-rose to-rose-deep p-10 md:p-14 flex flex-col justify-between text-warm-white">
+            <div>
+              <p className="text-xs font-bold uppercase tracking-[0.3em] mb-3 opacity-90">Mother's Day</p>
+              <h3 className="font-display text-4xl md:text-5xl mb-4 max-w-sm">Gift the glow — up to 30% off curated sets</h3>
+            </div>
+            <Link to="/shop" className="bg-warm-white text-rose-deep px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs w-fit hover:scale-105 transition">
+              Shop Gifts
+            </Link>
           </div>
         </div>
       </section>
@@ -190,27 +214,19 @@ function Home() {
         <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-between items-end mb-12">
             <h2 className="font-display text-4xl md:text-5xl">{t("sections.tips")}</h2>
-            <a href="#" className="text-xs font-bold uppercase tracking-widest border-b border-background/40 pb-1">
+            <Link to="/about" className="text-xs font-bold uppercase tracking-widest border-b border-background/40 pb-1">
               {t("sections.viewAll")}
-            </a>
+            </Link>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
-            {[
-              { title: "The Glass-Skin Ritual", img: "photo-1556228720-195a672e8a03", tag: "Skincare" },
-              { title: "A Rose-Tinted Lip in 60s", img: "photo-1586495777744-4413f21062fa", tag: "Makeup" },
-              { title: "Scalp Care for Healthy Hair", img: "photo-1626282874430-c11ae32d2898", tag: "Haircare" },
-            ].map((tip) => (
+            {journalPosts.map((tip) => (
               <article key={tip.title} className="group cursor-pointer">
                 <div className="aspect-[4/3] rounded-3xl overflow-hidden mb-6">
-                  <img
-                    src={`https://images.unsplash.com/${tip.img}?auto=format&fit=crop&w=900&q=80`}
-                    alt={tip.title}
-                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  />
+                  <img src={tip.img} alt={tip.title} loading="lazy" className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                 </div>
                 <p className="text-xs uppercase tracking-widest text-rose mb-2">{tip.tag}</p>
                 <h3 className="font-display text-2xl mb-2">{tip.title}</h3>
-                <p className="text-sm text-background/60">A three-step morning ceremony designed for a luminous, satin-finish glow that lasts.</p>
+                <p className="text-sm text-background/60">{tip.body}</p>
               </article>
             ))}
           </div>
@@ -221,11 +237,7 @@ function Home() {
       <section className="max-w-7xl mx-auto px-6 py-24">
         <h2 className="font-display text-4xl md:text-5xl text-center mb-16">{t("sections.testimonials")}</h2>
         <div className="grid md:grid-cols-3 gap-6">
-          {[
-            { name: "Layla A.", text: "Glowify changed my morning routine. The Hydra-Satin Dew is unmatched." },
-            { name: "Noor K.", text: "Finally a brand that delivers on luxury and clean ingredients." },
-            { name: "Sofia M.", text: "The packaging alone is worth it. The formulas are incredible." },
-          ].map((r) => (
+          {testimonials.map((r) => (
             <div key={r.name} className="bg-warm-white rounded-3xl p-8 border border-rose/10">
               <div className="flex gap-1 mb-4 text-rose">
                 {Array.from({ length: 5 }).map((_, i) => (
@@ -233,7 +245,31 @@ function Home() {
                 ))}
               </div>
               <p className="text-lg leading-relaxed mb-6">"{r.text}"</p>
-              <p className="text-xs uppercase tracking-widest font-bold">{r.name}</p>
+              <div className="flex items-center gap-3">
+                <img src={r.avatar} alt={r.name} loading="lazy" className="size-12 rounded-full object-cover" />
+                <div>
+                  <p className="text-sm font-bold">{r.name}</p>
+                  <p className="text-xs text-muted-foreground uppercase tracking-widest">{r.role}</p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* TRUST STRIP */}
+      <section className="bg-pink-light/10 py-16">
+        <div className="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+          {[
+            { icon: Truck, title: "Free shipping", desc: "Orders over $50" },
+            { icon: ShieldCheck, title: "30-day returns", desc: "No questions asked" },
+            { icon: Leaf, title: "Cruelty-free", desc: "Vegan formulas" },
+            { icon: Award, title: "Award winning", desc: "Allure 2025" },
+          ].map((item) => (
+            <div key={item.title} className="flex flex-col items-center gap-3">
+              <item.icon className="size-7 text-rose" />
+              <p className="font-display text-lg">{item.title}</p>
+              <p className="text-xs text-muted-foreground uppercase tracking-widest">{item.desc}</p>
             </div>
           ))}
         </div>
@@ -243,16 +279,9 @@ function Home() {
       <section className="max-w-5xl mx-auto px-6 py-24 text-center">
         <h2 className="font-display text-5xl mb-6">{t("sections.newsletter")}</h2>
         <p className="text-muted-foreground mb-10 max-w-md mx-auto">{t("sections.newsletterBody")}</p>
-        <form className="flex flex-col md:flex-row gap-4 max-w-lg mx-auto">
-          <input
-            type="email"
-            placeholder={t("sections.email")}
-            className="flex-1 bg-warm-white border border-rose/20 rounded-full px-8 py-4 focus:outline-none focus:border-rose"
-          />
-          <button
-            type="submit"
-            className="bg-foreground text-background px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-rose-deep transition"
-          >
+        <form className="flex flex-col md:flex-row gap-4 max-w-lg mx-auto" onSubmit={(e) => { e.preventDefault(); alert("Thanks for subscribing!"); }}>
+          <input type="email" placeholder={t("sections.email")} required className="flex-1 bg-warm-white border border-rose/20 rounded-full px-8 py-4 focus:outline-none focus:border-rose" />
+          <button type="submit" className="bg-foreground text-background px-8 py-4 rounded-full font-bold uppercase tracking-widest text-xs hover:bg-rose-deep transition">
             {t("sections.subscribe")}
           </button>
         </form>

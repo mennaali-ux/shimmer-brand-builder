@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
@@ -11,6 +11,7 @@ type Mode = "login" | "register" | "forgot";
 
 function Auth() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
   const [mode, setMode] = useState<Mode>("login");
 
   return (
@@ -54,10 +55,21 @@ function Auth() {
             <div className="flex-1 h-px bg-rose/10" />
           </div>
 
-          <form className="space-y-4">
-            {mode === "register" && <Field label={t("auth.name")} type="text" />}
-            <Field label={t("auth.email")} type="email" />
-            {mode !== "forgot" && <Field label={t("auth.password")} type="password" />}
+          <form
+            className="space-y-4"
+            onSubmit={(e) => {
+              e.preventDefault();
+              if (mode === "forgot") {
+                alert("Reset link sent — check your inbox.");
+                setMode("login");
+              } else {
+                navigate({ to: "/account" });
+              }
+            }}
+          >
+            {mode === "register" && <Field label={t("auth.name")} type="text" required />}
+            <Field label={t("auth.email")} type="email" required />
+            {mode !== "forgot" && <Field label={t("auth.password")} type="password" required />}
 
             {mode === "login" && (
               <div className="text-end">
