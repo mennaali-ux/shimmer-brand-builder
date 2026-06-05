@@ -84,7 +84,7 @@ function Stat({ label, value }: { label: string; value: string }) {
 
 function ActionCard({ to, icon, title, desc }: { to: string; icon: React.ReactNode; title: string; desc: string }) {
   return (
-    <Link to={to} className="block bg-warm-white border border-rose/10 rounded-3xl p-6 hover:border-rose transition group">
+    <Link to={to as "/orders"} className="block bg-warm-white border border-rose/10 rounded-3xl p-6 hover:border-rose transition group">
       <div className="size-10 rounded-full bg-pink-light/30 grid place-items-center mb-4">{icon}</div>
       <h3 className="font-display text-xl mb-1 group-hover:text-rose transition">{title}</h3>
       <p className="text-sm text-muted-foreground">{desc}</p>
