@@ -71,7 +71,7 @@ function AdminLayout() {
             return (
               <Link
                 key={n.to}
-                to={n.to}
+                to={n.to as "/admin"}
                 onClick={() => setOpen(false)}
                 className={`flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm transition ${
                   active ? "bg-rose text-warm-white" : "text-background/80 hover:bg-background/10"
